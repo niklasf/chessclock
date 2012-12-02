@@ -21,11 +21,14 @@
 MainWindow::MainWindow()
 {
     QHBoxLayout *hbox = new QHBoxLayout();
+    hbox->setSpacing(1);
 
     m_leftWidget = new QLCDNumber();
+    m_leftWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     hbox->addWidget(m_leftWidget);
 
     m_rightWidget = new QLCDNumber();
+    m_rightWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     hbox->addWidget(m_rightWidget);
 
     m_clock = new FisherClock(10, 10, 5, 5);
@@ -34,8 +37,12 @@ MainWindow::MainWindow()
     connect(m_timer, SIGNAL(timeout()), this, SLOT(tick()));
     m_timer->start((int)(m_delta * 1000));
 
-    QWidget *centralWidget = new QWidget(this);
+    QWidget *centralWidget = new QWidget();
+    centralWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     centralWidget->setLayout(hbox);
+
+    this->setWindowTitle("Chess Clock");
+    this->setCentralWidget(centralWidget);
 }
 
 MainWindow::~MainWindow()
