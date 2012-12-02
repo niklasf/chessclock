@@ -24,7 +24,7 @@ void HourglassClock::tick(float delta)
         m_rightTime += delta;
     } else {
         m_rightTime -= delta;
-        m_rightTime += delta;
+        m_leftTime += delta;
     }
     updateFlag();
 }

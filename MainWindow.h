@@ -29,6 +29,9 @@ class MainWindow : public QMainWindow
         MainWindow();
         ~MainWindow();
 
+    protected:
+        virtual void mousePressEvent(QMouseEvent *event);
+
     private:
         Clock *m_clock;
         QTimer *m_timer;
@@ -39,6 +42,7 @@ class MainWindow : public QMainWindow
     private slots:
         QString formatTime(float time);
         void tick();
+        void hit();
 };
 
 #endif

@@ -46,6 +46,8 @@ MainWindow::MainWindow()
     this->setWindowTitle("Chess Clock");
     this->setCentralWidget(centralWidget);
     this->resize(400, 100);
+
+    connect(this, SIGNAL(click()), this, SLOT(hit()));
 }
 
 MainWindow::~MainWindow()
@@ -122,4 +124,14 @@ void MainWindow::tick()
     }
     m_rightWidget->setPalette(rightPalette);
     m_rightWidget->display(formatTime(m_clock->getRightTime()));
+}
+
+void MainWindow::mousePressEvent(QMouseEvent *event)
+{
+    hit();
+}
+
+void MainWindow::hit()
+{
+    m_clock->hit();
 }
