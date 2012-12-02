@@ -15,30 +15,26 @@
  * along with Chessclock. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CLOCK_H
-#define CLOCK_H
+#ifndef FISHERCLOCK_H
+#define FISHERCLOCK_H
 
-class Clock
+#include "Clock.h"
+
+class FisherClock : public Clock
 {
     public:
-        Clock(float leftTime, float rightTime) {
-            m_leftTime = leftTime;
-            m_rightTime = rightTime;
+        FisherClock(float leftTime, float rightTime, float leftIncrement, float rightIncrement) : Clock(leftTime, rightTime) {
+            m_leftIncrement = leftIncrement;
+            m_rightIncrement = rightIncrement;
         }
 
-        virtual void tick(float delta);
         virtual void hit();
-        float getLeftTime();
-        float getRightTime();
-        bool getLeftFlaggedFirst();
-        bool getRightFlaggedFirst();
+        float getLeftIncrement();
+        float getRightIncrement();
 
     protected:
-        float m_leftTime;
-        float m_rightTime;
-        bool m_leftFlaggedFirst;
-        bool m_rightFlaggedFirst;
-        bool m_leftActive;
+        float m_leftIncrement;
+        float m_rightIncrement;
 };
 
 #endif

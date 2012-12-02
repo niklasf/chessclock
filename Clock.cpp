@@ -17,12 +17,6 @@
 
 #include "Clock.h"
 
-Clock::Clock(float leftTime, float rightTime)
-{
-    m_leftTime = leftTime;
-    m_rightTime = rightTime;
-}
-
 void Clock::tick(float delta)
 {
     if (m_leftActive) {
