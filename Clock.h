@@ -24,6 +24,9 @@ class Clock
         Clock(float leftTime, float rightTime) {
             m_leftTime = leftTime;
             m_rightTime = rightTime;
+            m_leftActive = true;
+            m_leftFlaggedFirst = false;
+            m_rightFlaggedFirst  = false;
         }
 
         virtual void tick(float delta);

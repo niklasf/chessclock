@@ -16,8 +16,9 @@
  */
 
 #include "MainWindow.h"
-#include "FisherClock.h"
+#include "HourglassClock.h"
 #include <stdlib.h>
+#include <QColorGroup>
 
 MainWindow::MainWindow()
 {
@@ -32,11 +33,10 @@ MainWindow::MainWindow()
     m_rightWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     hbox->addWidget(m_rightWidget);
 
-    m_clock = new FisherClock(10, 10, 5, 5);
+    m_clock = new HourglassClock(20000, 1);
 
     m_timer = new QTimer();
     connect(m_timer, SIGNAL(timeout()), this, SLOT(tick()));
-    //m_timer->start((int)(m_delta * 1000));
     m_timer->start((int)(m_delta * 1000));
 
     QWidget *centralWidget = new QWidget();
@@ -45,6 +45,7 @@ MainWindow::MainWindow()
 
     this->setWindowTitle("Chess Clock");
     this->setCentralWidget(centralWidget);
+    this->resize(400, 100);
 }
 
 MainWindow::~MainWindow()
@@ -100,6 +101,25 @@ QString MainWindow::formatTime(float time)
 void MainWindow::tick()
 {
     m_clock->tick(m_delta);
+
+    QPalette defaultPalette;
+
+    QPalette leftPalette = m_leftWidget->palette();
+    if (m_clock->getLeftFlaggedFirst()) {
+        leftPalette.setColor(QPalette::Foreground, Qt::red);
+    } else {
+        leftPalette.setColor(QPalette::Foreground, defaultPalette.color(QPalette::Foreground));
+    }
+    m_leftWidget->setPalette(leftPalette);
     m_leftWidget->display(formatTime(m_clock->getLeftTime()));
+
+    QPalette rightPalette = m_rightWidget->palette();
+    if (m_clock->getRightFlaggedFirst()) {
+        rightPalette.setColor(QPalette::Foreground, Qt::red);
+    }
+    else {
+        rightPalette.setColor(QPalette::Foreground, defaultPalette.color(QPalette::Foreground));
+    }
+    m_rightWidget->setPalette(rightPalette);
     m_rightWidget->display(formatTime(m_clock->getRightTime()));
 }
