@@ -45,6 +45,7 @@ void BronsteinClock::tick(float delta)
             m_rightTime -= delta;
         }
    }
+   updateFlag();
 }
 
 float BronsteinClock::getLeftThinkingTime()

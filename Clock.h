@@ -34,6 +34,7 @@ class Clock
         bool getRightFlaggedFirst();
 
     protected:
+        void updateFlag();
         float m_leftTime;
         float m_rightTime;
         bool m_leftFlaggedFirst;

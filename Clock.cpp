@@ -21,14 +21,18 @@ void Clock::tick(float delta)
 {
     if (m_leftActive) {
         m_leftTime -= delta;
-        if (m_leftTime <= 0.0f && !m_rightFlaggedFirst) {
-            m_leftFlaggedFirst = true;
-        }
     } else {
         m_rightTime -= delta;
-        if (m_rightTime <= 0.0f && !m_leftFlaggedFirst) {
-            m_rightFlaggedFirst = true;
-        }
+    }
+    updateFlag();
+}
+
+void Clock::updateFlag()
+{
+    if (m_leftTime <= 0.0f && !m_rightFlaggedFirst) {
+        m_leftFlaggedFirst = true;
+    } else if (m_rightTime < 0.0f && !m_leftFlaggedFirst) {
+        m_rightFlaggedFirst = true;
     }
 }
 
