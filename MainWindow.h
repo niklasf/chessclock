@@ -31,6 +31,7 @@ class MainWindow : public QMainWindow
 
     protected:
         virtual void mousePressEvent(QMouseEvent *event);
+        virtual void keyPressEvent(QKeyEvent *event);
 
     private:
         Clock *m_clock;
