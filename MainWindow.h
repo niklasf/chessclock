@@ -18,6 +18,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "Clock.h"
 #include <QtGui>
 
 class MainWindow : public QMainWindow
@@ -26,6 +27,17 @@ class MainWindow : public QMainWindow
 
     public:
         MainWindow();
+        ~MainWindow();
+
+    private:
+        Clock *m_clock;
+        QTimer *m_timer;
+        QLCDNumber *m_leftWidget;
+        QLCDNumber *m_rightWidget;
+        static const float m_delta = 0.01;
+
+    private slots:
+        void tick();
 };
 
 #endif

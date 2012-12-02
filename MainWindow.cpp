@@ -16,7 +16,36 @@
  */
 
 #include "MainWindow.h"
+#include "FisherClock.h"
 
 MainWindow::MainWindow()
 {
+    QHBoxLayout *hbox = new QHBoxLayout();
+
+    m_leftWidget = new QLCDNumber();
+    hbox->addWidget(m_leftWidget);
+
+    m_rightWidget = new QLCDNumber();
+    hbox->addWidget(m_rightWidget);
+
+    m_clock = new FisherClock(10, 10, 5, 5);
+
+    m_timer = new QTimer();
+    connect(m_timer, SIGNAL(timeout()), this, SLOT(tick()));
+    m_timer->start((int)(m_delta * 1000));
+
+    QWidget *centralWidget = new QWidget(this);
+    centralWidget->setLayout(hbox);
+}
+
+MainWindow::~MainWindow()
+{
+    delete m_clock;
+}
+
+void MainWindow::tick()
+{
+    m_clock->tick(m_delta);
+    m_leftWidget->display("55");
+    m_rightWidget->display("777");
 }
