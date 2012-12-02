@@ -34,9 +34,10 @@ class MainWindow : public QMainWindow
         QTimer *m_timer;
         QLCDNumber *m_leftWidget;
         QLCDNumber *m_rightWidget;
-        static const float m_delta = 0.01;
+        static const float m_delta = 0.037;
 
     private slots:
+        QString formatTime(float time);
         void tick();
 };
 
