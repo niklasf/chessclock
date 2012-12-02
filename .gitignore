@@ -1,0 +1,4 @@
+*.o
+chessclock
+Makefile
+moc_*
