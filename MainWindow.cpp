@@ -39,6 +39,8 @@ MainWindow::MainWindow()
     for (int side = 0; side < 2; side++) {
         m_lcdWidgets[side] = new QLCDNumber(10);
         m_lcdWidgets[side]->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        m_lcdWidgets[side]->setFrameShape(QFrame::Panel);
+        m_lcdWidgets[side]->setLineWidth(2);
         hbox->addWidget(m_lcdWidgets[side]);
     }
 
@@ -119,6 +121,11 @@ void MainWindow::tick()
             palette.setColor(QPalette::Foreground, Qt::red);
         } else {
             palette.setColor(QPalette::Foreground, defaultPalette.color(QPalette::Foreground));
+        }
+        if (side == m_clock->activeSide()) {
+            m_lcdWidgets[side]->setFrameShadow(QFrame::Sunken);
+        } else {
+            m_lcdWidgets[side]->setFrameShadow(QFrame::Raised);
         }
         m_lcdWidgets[side]->setPalette(palette);
         m_lcdWidgets[side]->display(formatTime(m_clock->getTime((Clock::Side)side)));

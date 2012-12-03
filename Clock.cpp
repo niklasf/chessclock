@@ -50,3 +50,8 @@ bool Clock::flaggedFirst(Side side)
 {
     return m_flaggedFirst[side];
 }
+
+Clock::Side Clock::activeSide()
+{
+    return (Clock::Side)m_activeSide;
+}
