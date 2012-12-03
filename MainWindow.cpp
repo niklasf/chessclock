@@ -27,24 +27,22 @@
 
 MainWindow::MainWindow()
 {
-    m_audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory, this);
+/*    m_audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory, this);
     m_soundPlayer = new Phonon::MediaObject(this);
     m_hitLeftSound = new Phonon::MediaSource("./hit-left.wav");
     m_hitRightSound = new Phonon::MediaSource("./hit-right.wav");
-    Phonon::createPath(m_soundPlayer, m_audioOutput);
+    Phonon::createPath(m_soundPlayer, m_audioOutput); */
 
     QHBoxLayout *hbox = new QHBoxLayout();
     hbox->setSpacing(1);
 
-    m_leftWidget = new QLCDNumber(10);
-    m_leftWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    hbox->addWidget(m_leftWidget);
+    for (int side = 0; side < 2; side++) {
+        m_lcdWidgets[side] = new QLCDNumber(10);
+        m_lcdWidgets[side]->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        hbox->addWidget(m_lcdWidgets[side]);
+    }
 
-    m_rightWidget = new QLCDNumber(10);
-    m_rightWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    hbox->addWidget(m_rightWidget);
-
-    m_clock = new BronsteinClock(10, 12, 5, 5);
+    m_clock = new FisherClock(10, 12, 5, 5);
 
     m_timer = new QTimer();
     connect(m_timer, SIGNAL(timeout()), this, SLOT(tick()));
@@ -115,24 +113,16 @@ void MainWindow::tick()
 
     QPalette defaultPalette;
 
-    QPalette leftPalette = m_leftWidget->palette();
-    if (m_clock->flaggedFirst(Clock::Left)) {
-        leftPalette.setColor(QPalette::Foreground, Qt::red);
-    } else {
-        leftPalette.setColor(QPalette::Foreground, defaultPalette.color(QPalette::Foreground));
+    for (int side = 0; side < 2; side++) {
+        QPalette palette = m_lcdWidgets[side]->palette();
+        if (m_clock->flaggedFirst((Clock::Side)side)) {
+            palette.setColor(QPalette::Foreground, Qt::red);
+        } else {
+            palette.setColor(QPalette::Foreground, defaultPalette.color(QPalette::Foreground));
+        }
+        m_lcdWidgets[side]->setPalette(palette);
+        m_lcdWidgets[side]->display(formatTime(m_clock->getTime((Clock::Side)side)));
     }
-    m_leftWidget->setPalette(leftPalette);
-    m_leftWidget->display(formatTime(m_clock->getTime(Clock::Left)));
-
-    QPalette rightPalette = m_rightWidget->palette();
-    if (m_clock->flaggedFirst(Clock::Right)) {
-        rightPalette.setColor(QPalette::Foreground, Qt::red);
-    }
-    else {
-        rightPalette.setColor(QPalette::Foreground, defaultPalette.color(QPalette::Foreground));
-    }
-    m_rightWidget->setPalette(rightPalette);
-    m_rightWidget->display(formatTime(m_clock->getTime(Clock::Right)));
 }
 
 void MainWindow::mousePressEvent(QMouseEvent *event)
@@ -147,10 +137,10 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 
 void MainWindow::hit()
 {
-    m_soundPlayer->stop();
+    /* m_soundPlayer->stop();
     m_soundPlayer->clear();
     m_soundPlayer->clearQueue();
     m_soundPlayer->setCurrentSource(*m_hitRightSound);
-    m_soundPlayer->play();
+    m_soundPlayer->play(); */
     m_clock->hit();
 }

@@ -28,27 +28,37 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
     public:
+
         MainWindow();
+
         ~MainWindow();
 
     protected:
+
         virtual void mousePressEvent(QMouseEvent *event);
+
         virtual void keyPressEvent(QKeyEvent *event);
 
     private:
+
         Clock *m_clock;
+
         QTimer *m_timer;
-        QLCDNumber *m_leftWidget;
-        QLCDNumber *m_rightWidget;
+
+        QLCDNumber *m_lcdWidgets[2];
+
+        Phonon::AudioOutput *m_audioOutputs[2];
+
+        Phonon::MediaSource *m_hitSoundSource[2];
+
         static const float m_delta = 0.037;
-        Phonon::MediaObject *m_soundPlayer;
-        Phonon::MediaSource *m_hitLeftSound;
-        Phonon::MediaSource *m_hitRightSound;
-        Phonon::AudioOutput *m_audioOutput;
 
     private slots:
+
         QString formatTime(float time);
+
         void tick();
+
         void hit();
 };
 
