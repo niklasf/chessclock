@@ -57,7 +57,7 @@ MainWindow::MainWindow()
     this->setWindowTitle("Chess Clock");
     this->setCentralWidget(centralWidget);
     this->resize(400, 100);
-    this->setWindowIcon(QIcon("chessclock.png"));
+    this->setWindowIcon(QIcon(":/chessclock.png"));
 }
 
 MainWindow::~MainWindow()

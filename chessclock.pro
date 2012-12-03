@@ -16,3 +16,4 @@ SOURCES += BronsteinClock.cpp \
            HourglassClock.cpp \
            main.cpp \
            MainWindow.cpp
+RESOURCES += resources.qrc
