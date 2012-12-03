@@ -6,6 +6,7 @@ TEMPLATE = app
 TARGET = 
 DEPENDPATH += .
 INCLUDEPATH += .
+QT += phonon
 
 # Input
 HEADERS += BronsteinClock.h Clock.h FisherClock.h HourglassClock.h MainWindow.h

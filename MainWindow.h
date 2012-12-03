@@ -20,6 +20,8 @@
 
 #include "Clock.h"
 #include <QtGui>
+#include <phonon/audiooutput.h>
+#include <phonon/mediaobject.h>
 
 class MainWindow : public QMainWindow
 {
@@ -39,6 +41,10 @@ class MainWindow : public QMainWindow
         QLCDNumber *m_leftWidget;
         QLCDNumber *m_rightWidget;
         static const float m_delta = 0.037;
+        Phonon::MediaObject *m_soundPlayer;
+        Phonon::MediaSource *m_hitLeftSound;
+        Phonon::MediaSource *m_hitRightSound;
+        Phonon::AudioOutput *m_audioOutput;
 
     private slots:
         QString formatTime(float time);

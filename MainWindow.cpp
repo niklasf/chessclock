@@ -16,12 +16,21 @@
  */
 
 #include "MainWindow.h"
-#include "HourglassClock.h"
+#include "FisherClock.h"
 #include <stdlib.h>
 #include <QColorGroup>
+#include <phonon/mediaobject.h>
+#include <phonon/audiooutput.h>
+#include <phonon/backendcapabilities.h>
 
 MainWindow::MainWindow()
 {
+    m_audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory, this);
+    m_soundPlayer = new Phonon::MediaObject(this);
+    m_hitLeftSound = new Phonon::MediaSource("./hit-left.wav");
+    m_hitRightSound = new Phonon::MediaSource("./hit-right.wav");
+    Phonon::createPath(m_soundPlayer, m_audioOutput);
+
     QHBoxLayout *hbox = new QHBoxLayout();
     hbox->setSpacing(1);
 
@@ -33,7 +42,7 @@ MainWindow::MainWindow()
     m_rightWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     hbox->addWidget(m_rightWidget);
 
-    m_clock = new HourglassClock(20000, 1);
+    m_clock = new FisherClock(10, 12, 4, 5);
 
     m_timer = new QTimer();
     connect(m_timer, SIGNAL(timeout()), this, SLOT(tick()));
@@ -136,5 +145,8 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 
 void MainWindow::hit()
 {
+    m_soundPlayer->clear();
+    m_soundPlayer->setCurrentSource(*m_hitLeftSound);
+    m_soundPlayer->play();
     m_clock->hit();
 }
