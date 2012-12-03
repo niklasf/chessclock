@@ -19,41 +19,21 @@
 
 void BronsteinClock::hit()
 {
-    m_currentLeftThinkingTime = m_leftThinkingTime;
-    m_currentRightThinkingTime = m_rightThinkingTime;
+    m_currentThinkingTimes[Left] = m_thinkingTimes[Left];
+    m_currentThinkingTimes[Right] = m_thinkingTimes[Right];
     Clock::hit();
 }
 
 void BronsteinClock::tick(float delta)
 {
-    if (m_leftActive) {
-        if (m_currentLeftThinkingTime > 0.0f) {
-            m_currentLeftThinkingTime -= delta;
-            if (m_currentLeftThinkingTime < 0.0f) {
-                m_leftTime += m_currentLeftThinkingTime;
-            }
-        } else {
-            m_leftTime -= delta;
+    if (m_currentThinkingTimes[m_activeSide] > 0.0f) {
+        m_currentThinkingTimes[m_activeSide] -= delta;
+        if (m_currentThinkingTimes[m_activeSide] < 0.0f) {
+            m_times[m_activeSide] += m_currentThinkingTimes[m_activeSide];
         }
     } else {
-        if (m_currentRightThinkingTime > 0.0f) {
-            m_currentRightThinkingTime -= delta;
-            if (m_currentRightThinkingTime < 0.0f) {
-                m_rightTime += m_currentRightThinkingTime;
-            }
-        } else {
-            m_rightTime -= delta;
-        }
-   }
+        m_times[m_activeSide] -= delta;
+    }
+
    updateFlag();
-}
-
-float BronsteinClock::getLeftThinkingTime()
-{
-    return m_leftThinkingTime;
-}
-
-float BronsteinClock::getRightThinkingTime()
-{
-    return m_rightThinkingTime;
 }

@@ -23,7 +23,9 @@
 class HourglassClock : public Clock
 {
     public:
+
         HourglassClock(float leftTime, float rightTime) : Clock(leftTime, rightTime) { }
+
         virtual void tick(float delta);
 };
 

@@ -19,20 +19,6 @@
 
 void FisherClock::hit()
 {
-    if (m_leftActive) {
-        m_leftTime += m_leftIncrement;
-    } else {
-        m_rightTime += m_rightIncrement;
-    }
+    m_times[m_activeSide] += m_increments[m_activeSide];
     Clock::hit();
-}
-
-float FisherClock::getLeftIncrement()
-{
-    return m_leftIncrement;
-}
-
-float FisherClock::getRightIncrement()
-{
-    return m_rightIncrement;
 }

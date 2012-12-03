@@ -19,44 +19,34 @@
 
 void Clock::tick(float delta)
 {
-    if (m_leftActive) {
-        m_leftTime -= delta;
-    } else {
-        m_rightTime -= delta;
-    }
+    m_times[m_activeSide] -= delta;
     updateFlag();
 }
 
 void Clock::updateFlag()
 {
-    if (m_leftTime <= 0.0f && !m_rightFlaggedFirst) {
-        m_leftFlaggedFirst = true;
-    } else if (m_rightTime < 0.0f && !m_leftFlaggedFirst) {
-        m_rightFlaggedFirst = true;
+    if (m_times[Left] <= 0.0f && !m_flaggedFirst[Right]) {
+        m_flaggedFirst[Left] = true;
+    } else if (m_times[Right] < 0.0f && !m_flaggedFirst[Left]) {
+        m_flaggedFirst[Right] = true;
     }
 }
 
 void Clock::hit()
 {
-    m_leftActive = !m_leftActive;
+    if (m_activeSide == Left) {
+        m_activeSide = Right;
+    } else {
+        m_activeSide = Left;
+    }
 }
 
-float Clock::getLeftTime()
+float Clock::getTime(Side side)
 {
-    return m_leftTime;
+    return m_times[side];
 }
 
-float Clock::getRightTime()
+bool Clock::flaggedFirst(Side side)
 {
-    return m_rightTime;
-}
-
-bool Clock::getLeftFlaggedFirst()
-{
-    return m_leftFlaggedFirst;
-}
-
-bool Clock::getRightFlaggedFirst()
-{
-    return m_rightFlaggedFirst;
+    return m_flaggedFirst[side];
 }

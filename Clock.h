@@ -20,29 +20,39 @@
 
 class Clock
 {
-    public:
+   public:
+        enum Side {
+            Left = 0,
+            Right = 1,
+        };
+
         Clock(float leftTime, float rightTime) {
-            m_leftTime = leftTime;
-            m_rightTime = rightTime;
-            m_leftActive = true;
-            m_leftFlaggedFirst = false;
-            m_rightFlaggedFirst  = false;
+            m_times[Left] = leftTime;
+            m_times[Right] = rightTime;
+            m_flaggedFirst[Left] = false;
+            m_flaggedFirst[Right] = false;
+            m_activeSide = Left;
         }
 
         virtual void tick(float delta);
+
         virtual void hit();
-        float getLeftTime();
-        float getRightTime();
-        bool getLeftFlaggedFirst();
-        bool getRightFlaggedFirst();
+
+        float getTime(Side side);
+
+        bool flaggedFirst(Side side);
+
+        Side activeSide();
 
     protected:
+
         void updateFlag();
-        float m_leftTime;
-        float m_rightTime;
-        bool m_leftFlaggedFirst;
-        bool m_rightFlaggedFirst;
-        bool m_leftActive;
+
+        float m_times[2];
+
+        bool m_flaggedFirst[2];
+
+        int m_activeSide;
 };
 
 #endif

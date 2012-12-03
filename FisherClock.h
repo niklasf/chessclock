@@ -23,18 +23,17 @@
 class FisherClock : public Clock
 {
     public:
+
         FisherClock(float leftTime, float rightTime, float leftIncrement, float rightIncrement) : Clock(leftTime, rightTime) {
-            m_leftIncrement = leftIncrement;
-            m_rightIncrement = rightIncrement;
+            m_increments[Left] = leftIncrement;
+            m_increments[Right] = rightIncrement;
         }
 
         virtual void hit();
-        float getLeftIncrement();
-        float getRightIncrement();
 
     protected:
-        float m_leftIncrement;
-        float m_rightIncrement;
+
+        float m_increments[2];
 };
 
 #endif

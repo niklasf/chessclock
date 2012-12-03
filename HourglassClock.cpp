@@ -19,12 +19,12 @@
 
 void HourglassClock::tick(float delta)
 {
-    if (m_leftActive) {
-        m_leftTime -= delta;
-        m_rightTime += delta;
+    if (m_activeSide == Left) {
+        m_times[Left] -= delta;
+        m_times[Right] += delta;
     } else {
-        m_rightTime -= delta;
-        m_leftTime += delta;
+        m_times[Right] -= delta;
+        m_times[Left] += delta;
     }
     updateFlag();
 }

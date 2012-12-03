@@ -24,22 +24,19 @@ class BronsteinClock : public Clock
 {
     public:
         BronsteinClock(float leftTime, float rightTime, float leftThinkingTime, float rightThinkingTime) : Clock(leftTime, rightTime) {
-            m_leftThinkingTime = leftThinkingTime;
-            m_rightThinkingTime = rightThinkingTime;
-            m_currentLeftThinkingTime = m_leftThinkingTime;
-            m_currentRightThinkingTime = m_rightThinkingTime;
+            m_thinkingTimes[Left] = m_currentThinkingTimes[Left] = leftThinkingTime;
+            m_thinkingTimes[Right] = m_currentThinkingTimes[Right] = rightThinkingTime;
         }
 
         virtual void tick(float delta);
+
         virtual void hit();
-        float getLeftThinkingTime();
-        float getRightThinkingTime();
 
     protected:
-        float m_leftThinkingTime;
-        float m_rightThinkingTime;
-        float m_currentLeftThinkingTime;
-        float m_currentRightThinkingTime;
+
+        float m_thinkingTimes[2];
+
+        float m_currentThinkingTimes[2];
 };
 
 #endif

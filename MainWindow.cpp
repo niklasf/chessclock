@@ -116,23 +116,23 @@ void MainWindow::tick()
     QPalette defaultPalette;
 
     QPalette leftPalette = m_leftWidget->palette();
-    if (m_clock->getLeftFlaggedFirst()) {
+    if (m_clock->flaggedFirst(Clock::Left)) {
         leftPalette.setColor(QPalette::Foreground, Qt::red);
     } else {
         leftPalette.setColor(QPalette::Foreground, defaultPalette.color(QPalette::Foreground));
     }
     m_leftWidget->setPalette(leftPalette);
-    m_leftWidget->display(formatTime(m_clock->getLeftTime()));
+    m_leftWidget->display(formatTime(m_clock->getTime(Clock::Left)));
 
     QPalette rightPalette = m_rightWidget->palette();
-    if (m_clock->getRightFlaggedFirst()) {
+    if (m_clock->flaggedFirst(Clock::Right)) {
         rightPalette.setColor(QPalette::Foreground, Qt::red);
     }
     else {
         rightPalette.setColor(QPalette::Foreground, defaultPalette.color(QPalette::Foreground));
     }
     m_rightWidget->setPalette(rightPalette);
-    m_rightWidget->display(formatTime(m_clock->getRightTime()));
+    m_rightWidget->display(formatTime(m_clock->getTime(Clock::Right)));
 }
 
 void MainWindow::mousePressEvent(QMouseEvent *event)
