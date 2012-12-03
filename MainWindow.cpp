@@ -17,6 +17,8 @@
 
 #include "MainWindow.h"
 #include "FisherClock.h"
+#include "HourglassClock.h"
+#include "BronsteinClock.h"
 #include <stdlib.h>
 #include <QColorGroup>
 #include <phonon/mediaobject.h>
@@ -42,7 +44,7 @@ MainWindow::MainWindow()
     m_rightWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     hbox->addWidget(m_rightWidget);
 
-    m_clock = new FisherClock(10, 12, 4, 5);
+    m_clock = new BronsteinClock(10, 12, 5, 5);
 
     m_timer = new QTimer();
     connect(m_timer, SIGNAL(timeout()), this, SLOT(tick()));
@@ -145,8 +147,10 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 
 void MainWindow::hit()
 {
+    m_soundPlayer->stop();
     m_soundPlayer->clear();
-    m_soundPlayer->setCurrentSource(*m_hitLeftSound);
+    m_soundPlayer->clearQueue();
+    m_soundPlayer->setCurrentSource(*m_hitRightSound);
     m_soundPlayer->play();
     m_clock->hit();
 }
